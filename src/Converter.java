@@ -1,25 +1,26 @@
 public class Converter {
-    double distance = 0.75;
-    double cal = 50;
+    double lengthByMeters = 0.75;
+    double calByStep = 50;
     StepTracker stepTracker;
+
     public Converter(StepTracker stepTracker) {
         this.stepTracker = stepTracker;
-
-
     }
 
     /**
-     Конвертирует шаги в расстояние (км)
+     * Конвертирует шаги в расстояние (км)
      */
-    public void convertDist (int numberMonth){
-        System.out.println((stepTracker.printStepForMonth(numberMonth) * distance)/1000);
+    public void convertDist(int numberMonth) {
+        double distance = stepTracker.printStepForMonth(numberMonth) * lengthByMeters / 1000;
+        System.out.println(distance);
     }
 
     /**
-     Конвертирует шаги в потраченные килокалории
+     * Конвертирует шаги в потраченные килокалории
      */
-    public void convertCal (int numberMonth){
-        System.out.println((stepTracker.printStepForMonth(numberMonth) * cal)/1000);
+    public void convertCal(int numberMonth) {
+        double calories = stepTracker.printStepForMonth(numberMonth) * calByStep / 1000;
+        System.out.println(calories);
     }
 }
 

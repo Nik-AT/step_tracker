@@ -5,11 +5,11 @@ public class StepTracker {
     HashMap<Integer, int[]> monthDayStep = new HashMap<>();
 
     /**
-     Сохраняет кол-во шагов за определенный день
-     В каждом месяце 30 дней
+     * Сохраняет кол-во шагов за определенный день
+     * В каждом месяце 30 дней
      */
     public void saveStep(int numberMonth, int numberDay, int step) {
-        int [] stepForMonth = monthDayStep.get(numberMonth);
+        int[] stepForMonth = monthDayStep.get(numberMonth);
         if (stepForMonth == null) {  // Проверка, есть ли такой месяц в хеш-таблице
             stepForMonth = new int[30]; // Создаем новый массив
             monthDayStep.put(numberMonth, stepForMonth); // Добавляем в хеш-таблице номер месяца и массив
@@ -18,107 +18,135 @@ public class StepTracker {
     }
 
     /**
-     Выводит количество пройденных шагов по дням
+     * Выводит количество пройденных шагов по дням
      */
-    public void printStepForDay (int numberMonth){
-        int[] m = monthDayStep.get(numberMonth);
-        if (!(m == null)) {
-            for (int i = 0; i < m.length; i++)
-                System.out.print((i + 1) + " день: " + m[i] + ", " );
+    public void printStepForDay(int numberMonth) {
+        int[] stepForMonth = monthDayStep.get(numberMonth);
+        if (!(stepForMonth == null)) {
+            for (int i = 0; i < stepForMonth.length; i++) {
+                System.out.print((i + 1) + " день: " + stepForMonth[i] + ", ");
+            }
             System.out.println("");
-
+        } else {
+            System.out.println("0");
         }
-        else System.out.println("0");
     }
 
     /**
-     Общее количество шагов за месяц
+     * Общее количество шагов за месяц
      */
     public int printStepForMonth(int numberMonth) {
-        int[] m = monthDayStep.get(numberMonth);
-        if (!(m == null)) {
+        int[] stepForMonth = monthDayStep.get(numberMonth);
+        if (!(stepForMonth == null)) {
             int max = 0;
-            for (Integer s : m)
+            for (Integer s : stepForMonth) {
                 max += s;
+            }
             return max;
+        } else {
+            return 0;
         }
-        else return 0;
     }
 
     /**
-     Среднее количество шагов за месяц
+     * Максимальное кол-во шагов в месяц
      */
-    public void printAvrStep (int numberMonth) {
-        int[] m = monthDayStep.get(numberMonth);
-        if (!(m == null)) {
+    public void maxStep (int numberMonth) {
+        int[] stepForMonth = monthDayStep.get(numberMonth);
+        if (!(stepForMonth == null)) {
+            int max = 0;
+            for (Integer stepDay : stepForMonth) {
+                int temp = 0;
+                temp += stepDay;
+                if (temp > max) {
+                    max = temp;
+                }
+            }
+            System.out.println(max);
+        }
+        else {
+            System.out.println("0");
+        }
+    }
+
+    /**
+     * Среднее количество шагов за месяц
+     */
+    public void printAvrStep(int numberMonth) {
+        int[] stepForMonth = monthDayStep.get(numberMonth);
+        if (!(stepForMonth == null)) {
             int sum = 0;
             int day = 0;
 
-            for (Integer s : m) {
-                if (s>0)
+            for (Integer stepDay : stepForMonth) {
+                if (stepDay > 0) {
                     day++;
-                sum+=s;
+                }
+                sum += stepDay;
             }
-            double avr = (double)sum/day;
-            System.out.println(avr);
-
+            double average = (double) sum / day;
+            System.out.println(average);
+        } else {
+            System.out.println("0");
         }
-        else System.out.println("0");
     }
 
     /**
-     Лучшая серия шагов
+     * Лучшая серия шагов
      */
-    public void bestSeries (int numberMonth){
-        int[] m = monthDayStep.get(numberMonth);
-        if (!(m == null)) {
+    public void bestSeries(int numberMonth) {
+        int[] stepForMonth = monthDayStep.get(numberMonth);
+        if (!(stepForMonth == null)) {
             int best = 0;
             int temp = 0;
-            for (Integer s : m){
-                if (s >= goalOfStep){
+            for (Integer stepDay : stepForMonth) {
+                if (stepDay >= goalOfStep) {
                     temp++;
-                    if (temp > best)
+                    if (temp > best) {
                         best = temp;
+                    }
+                } else {
+                    temp = 0;
                 }
-                else temp = 0;
             }
             System.out.println(best);
+        } else {
+            System.out.println("0");
         }
-        else System.out.println("0");
     }
 
     /**
-     Изменение текущей цели по кол-ву шагов
+     * Изменение текущей цели по кол-ву шагов
      */
-    public void changeStep (int step) {
+    public void changeStep(int step) {
         if (step >= 0) {
             goalOfStep = step;
             System.out.println("Новая цель по кол-ву шагов: " + goalOfStep + "\n");
+        } else {
+            System.out.println("Вы ввели отрицательное число");
         }
-        else System.out.println("Вы ввели отрицательное число");
     }
 
     /**
-     Переводит цифровой формат в месяц
+     * Переводит цифровой формат в месяц
      */
-    public static String getNameMount(int month) {
-        return switch (month) {
-            case 0 -> "Январь";
-            case 1 -> "Февраль";
-            case 2 -> "Март";
-            case 3 -> "Апрель";
-            case 4 -> "Май";
-            case 5 -> "Июнь";
-            case 6 -> "Июль";
-            case 7 -> "Август";
-            case 8 -> "Сентябрь";
-            case 9 -> "Октябрь";
-            case 10 -> "Ноябрь";
-            case 11 -> "Декабрь";
-            default -> "";
-        };
+
+    public String getNameMonth(int numberOfMonth) {
+        HashMap<Integer, String> month = new HashMap<>();
+        month.put(0, "Январь");
+        month.put(1, "Февраль");
+        month.put(2, "Март");
+        month.put(3, "Апрель");
+        month.put(4, "Май");
+        month.put(5, "Июнь");
+        month.put(6, "Июль");
+        month.put(7, "Август");
+        month.put(8, "Сентябрь");
+        month.put(9, "Октябрь");
+        month.put(10, "Ноябрь");
+        month.put(11, "Декабрь");
+
+        return month.get(numberOfMonth);
     }
-
-
 }
 
