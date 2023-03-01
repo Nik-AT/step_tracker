@@ -1,2 +1,2 @@
-# java-sprint1-hw
-First sprint homework
+# step tracker
+Консольное приложение для контроля пройденных шагов
